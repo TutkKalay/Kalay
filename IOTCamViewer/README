@@ -1,0 +1,8 @@
+
+HOW TO BUILD THIS PROJECT
+
+1. Git clone ActionBarSherlock and IOTCamera_Android from bitbucket.
+2. Link ActionBarSherlockLibrary as library to your project.
+3. Link IOTCamera as library to your project.
+4. Copy libs(from SDK release package) to libs/armeabi/
+5. In eclipse, using Window -> Preferences -> Android -> Build -> uncheck "Force error when external jars contain native libraries"

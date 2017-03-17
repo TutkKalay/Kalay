@@ -1,0 +1,98 @@
+apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://maven.fabric.io/public' }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: '*.jar')
+    compile 'com.android.support:support-v4:22.2.0'
+    compile 'com.google.android.gms:play-services-gcm:7.5.0'
+    compile (project(':actionbarsherlocklibrary')){
+        exclude group: 'com.android.support', module: 'support-v4'
+    }
+    compile (project(':jakewharton')){
+        exclude group: 'com.android.support', module: 'support-v4'
+    }
+    compile (project(':SlidingMenulibrary')){
+        exclude group: 'com.android.support', module: 'support-v4'
+    }
+    compile project(':AVIOCTRLDEF:AVIOCtrlDefine')
+    compile('com.crashlytics.sdk.android:crashlytics:2.4.0@aar') {
+        transitive = true;
+    }
+}
+
+android {
+    compileSdkVersion 16
+    buildToolsVersion "21.1.2"
+
+    productFlavors {
+        
+        Kalay_Car {
+            applicationId = "com.tutk.Kalay.Novatek"
+            versionCode 2015072701
+            versionName = "1.0.0.8"
+        }
+        
+    }
+
+    sourceSets {
+        main {
+            java.srcDirs = ['src/main']
+            assets.srcDirs = ['assets']
+            jniLibs.srcDirs = ['libs']
+        }
+
+       
+
+        Kalay_Car {
+            java.srcDirs = ['src/Kalay_Car']
+            jniLibs.srcDirs = ['libs/Kalay_Car']
+        }
+    }
+
+    packagingOptions {
+        pickFirst 'META-INF/LICENSE.txt'
+        pickFirst 'META-INF/NOTICE.txt'
+        pickFirst 'META-INF/LICENSE'
+        pickFirst 'META-INF/NOTICE'
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+    }
+
+    buildTypes {
+
+        debug{
+            minifyEnabled true
+            zipAlignEnabled true
+            // Remove useless resource
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        release {
+            minifyEnabled true
+            zipAlignEnabled true
+            // Remove useless resource
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                        // apk file's name
+                        def fileName = "${variant.productFlavors[0].name}_${variant.productFlavors[0].versionName}.apk"
+                        output.outputFile = new File(outputFile.parent, fileName)
+                    }
+                }
+            }
+        }
+    }
+
+}

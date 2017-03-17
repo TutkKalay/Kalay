@@ -1,0 +1,4 @@
+include ':jakewharton'
+include ':actionbarsherlocklibrary'
+include ':IOTCamViewer'
+include ':SlidingMenulibrary'
